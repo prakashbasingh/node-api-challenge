@@ -40,13 +40,23 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+ANS: routing and middleware
+
 - [ ] Describe Middleware?
+
+ANS: Middleware is a function that is invoked by the express before the final request handler. Which sits in the middle between request and final intended rout. Middleware is array of function in express. Middleware function can get request and response objects, operate them and trigger some. Middleware are added feature to express. Most of the code in express including route handlers are middleware. There is built-in middleware, third-party middleware, and we can custom build the middleware.
 
 - [ ] Describe a Resource?
 
+ANS: during designing RESTful Web API, everything is resource(organized information). Each resource is accessible via a unique URI. Resource can have multiple representation. And resource management happens via HTTP methods.
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+ANS: success message or the result what client requested for.
+
 - [ ] How can we partition our application into sub-applications?
+
+ANS: dividing main application in to sub-application based on the core function, such asindex.js to setup port and deploy server, server.js to have main express library, and imports all the routers, set ups initial routs, routers.js application handles all the endpoint and middleware  and also imports helper function, and helper function handles all the methods that are required in the router function. 
 
 ## Minimum Viable Product
 
