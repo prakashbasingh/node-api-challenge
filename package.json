@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "db:seed": "knex seed:run",
-    "server": "nodemon index.js" 
+    "server": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/LambdaSchool/node-api-challenge#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^3.23.3",
     "knex": "^0.21.1",
@@ -32,6 +33,3 @@
   },
   "license": "ISC"
 }
-
-
-  
