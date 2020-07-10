@@ -2,11 +2,13 @@ const express = require('express');
 
 const router = require("express").Router();
 
-const Actions = require("../data/helpers/actionModel.js");
+const ActionsData = require("../data/helpers/actionModel.js");
+
+//*********** GET ************\\
 
 // get(): resolves to an array of all the resources contained in the database. If you pass an id to this method it will return the resource with that id if one is found.
-router.get("/:id", (req, res) => {
-    Actions.get(req.params.id)
+router.get("/:id",validateActionId, (req, res) => {
+    ActionsData.get(req.params.id)
         .then(action => {
             if(action){
                 res.status(200).json({action})
@@ -20,11 +22,13 @@ router.get("/:id", (req, res) => {
         })
 })
 
+//*********** POST ************\\
+
 // insert(): calling insert passing it a resource object will add it to the database and return the newly created resource.
-router.post("/:id/actions", (req, res) => {
+router.post("/:id/actions",validateAction,  (req, res) => {
     const actionInfo = {...req.body, project_id: req.params.id}
 
-    Actions.insert(actionInfo)
+    ActionsData.insert(actionInfo)
         .then(resource => {
             res.status(200).json(resource)
         })
@@ -34,9 +38,11 @@ router.post("/:id/actions", (req, res) => {
         })
 })
 
+//*********** PUT ************\\
+
 // update(): accepts two arguments, the first is the id of the resource to update, and the second is an object with the changes to apply. It returns the updated resource. If a resource with the provided id is not found, the method returns null.
-router.put("/:id", (req, res) => {
-    Actions.update(req.params.id, req.body)
+router.put("/:id",validateActionId, (req, res) => {
+    ActionsData.update(req.params.id, req.body)
         .then(action => {
             if(action){
                 res.status(200).json(action)
@@ -50,10 +56,11 @@ router.put("/:id", (req, res) => {
         })
 })
 
-// remove(): the remove method accepts an id as it's first parameter and, upon successfully deleting the resource from the database, returns the number of records deleted.
+//*********** DELETE ************\\
 
-router.delete("/:id", (req, res) => {
-    Actions.remove(req.params.id)
+// remove(): the remove method accepts an id as it's first parameter and, upon successfully deleting the resource from the database, returns the number of records deleted.
+router.delete("/:id",validateActionId, (req, res) => {
+    ActionsData.remove(req.params.id)
         .then(count => {
             if(count > 0){
                 res.status(200).json(count)
@@ -67,6 +74,31 @@ router.delete("/:id", (req, res) => {
         })
 })
 
+//*********** CUSTOM MIDDLEWARE ************\\
 
+function validateAction (req, res, next) {
+    const { description, notes } = req.body
+
+    if( !description || !notes ) {
+        res.status(400).json({message: "Please provide description and notes (validation message)"})
+    }else {
+        next()
+    }
+}
+
+function  validateActionId(req, res, next) {
+    ActionsData.get(req.params.id)
+    .then(action => {
+        if(action){
+            action = req.actions
+            next()
+        }else {
+            res.status(404).json({errorMessage: "Action with the ID does not exist (validation message)"})
+        }
+    })
+    .catch(error => {
+        res.status(500).json({errorMessage: "request can not be completed"})
+    })
+}
 
 module.exports = router;
