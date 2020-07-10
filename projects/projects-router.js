@@ -62,9 +62,25 @@ router.delete("/:id", (req, res) => {
         })
         .catch(error => {
             console.log(error)
-            res.status(500).json({errorMessage: "action can not be completed"})
+            res.status(500).json({errorMessage: "project can not be completed"})
         })
 })
+
+// The projectModel.js helper includes an extra method called getProjectActions() that takes a project id as it's only argument and returns a list of all the actions for the project.
+router.get("/:id/actions", (req, res) => [
+    Projects.getProjectActions(req.params.id)
+        .then(action => {
+            if(action){
+                res.status(200).json(action)
+            } else {
+                res.status(404).json({errorMessage: "the project id does not exist"})
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({errorMessage: "request can not be completed"})
+        })
+])
 
 
 module.exports = router;

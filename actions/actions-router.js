@@ -68,17 +68,5 @@ router.delete("/:id", (req, res) => {
 })
 
 
-// The projectModel.js helper includes an extra method called getProjectActions() that takes a project id as it's only argument and returns a list of all the actions for the project.
-
-
-
-
-
-
-
-
-
-
-
 
 module.exports = router;
