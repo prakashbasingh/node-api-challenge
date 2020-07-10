@@ -16,7 +16,10 @@ server.use("/api/projects", projectsRouter);
 
 
 server.get("/", (req, res) => {
-    res.send("<h1> My 1st Backend Sprint Challenge </h1>");
+    const message = process.env.MESSAGE;
+
+    res.status(200).json({ message });
+    // res.send("<h1> My 1st Backend Sprint Challenge </h1>");
 });
 
 
