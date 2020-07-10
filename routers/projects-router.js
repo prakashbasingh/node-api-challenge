@@ -67,7 +67,7 @@ router.delete("/:id", (req, res) => {
 })
 
 // The projectModel.js helper includes an extra method called getProjectActions() that takes a project id as it's only argument and returns a list of all the actions for the project.
-router.get("/:id/actions", (req, res) => [
+router.get("/:id/actions", (req, res) => {
     Projects.getProjectActions(req.params.id)
         .then(action => {
             if(action){
@@ -80,7 +80,7 @@ router.get("/:id/actions", (req, res) => [
             console.log(error)
             res.status(500).json({errorMessage: "request can not be completed"})
         })
-])
+})
 
 
 module.exports = router;
